@@ -141,7 +141,8 @@ FocusScope {
                 source: "../assets/controls/button_LT.png"
                 sourceSize.width: width
                 fillMode: Image.PreserveAspectFit
-                visible: root.state === "games"
+                //visible: root.state === "games"
+                visible: false
             }
 
             Component {
@@ -194,7 +195,8 @@ FocusScope {
                 source: "../assets/controls/button_RT.png"
                 sourceSize.width: width
                 fillMode: Image.PreserveAspectFit
-                visible: root.state === "games"
+                //visible: root.state === "games"
+                visible: false
             }
 
             visible: ["home","games"].includes(root.state)

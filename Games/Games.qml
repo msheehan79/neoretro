@@ -550,30 +550,23 @@ FocusScope {
 
                 if (api.keys.isPageDown(event)) {
                     event.accepted = true;
-
-                    if (currentCollectionIndex <= 0)
-                        currentCollectionIndex = api.collections.count - 1
-                    else
-                        currentCollectionIndex--;
-
-                    api.memory.set("currentCollectionIndex", currentCollectionIndex)
-                    currentGameIndex = 0
+                    if ((currentGameIndex + 10) > currentCollection.games.count - 1) {
+                        currentGameIndex = currentCollection.games.count - 1;
+                    } else {
+                        currentGameIndex += 10;
+                    }
+                    return
                 }
 
                 if (api.keys.isPageUp(event)) {
                     event.accepted = true;
-
-                    if (currentCollectionIndex >= api.collections.count - 1) {
-                        currentCollectionIndex = 0;
+                    if ((currentGameIndex - 10) < 0) {
+                        currentGameIndex = 0;
+                    } else {
+                        currentGameIndex -= 10;
                     }
-                    else {
-                        currentCollectionIndex++;
-                    }
-
-                    api.memory.set("currentCollectionIndex", currentCollectionIndex)
-                    currentGameIndex = 0
+                    return
                 }
-
             }
 
         }
