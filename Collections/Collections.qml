@@ -118,15 +118,16 @@ FocusScope {
             preferredHighlightEnd: preferredHighlightBegin
 
             Keys.onPressed: {
-
-                if (api.keys.isAccept(event)) {
+                if (api.keys.isAccept(event) && !event.isAutoRepeat) {
                     event.accepted = true;
                     currentMenuIndex = 2
+                    return
                 }
 
-                if (api.keys.isCancel(event)) {
+                if (api.keys.isCancel(event) && !event.isAutoRepeat) {
                     event.accepted = true;
                     currentMenuIndex = 0
+                    return
                 }
 
                 if (event.key == Qt.Key_Left) {

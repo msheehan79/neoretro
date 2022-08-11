@@ -168,24 +168,29 @@ FocusScope {
                 }
 
                 Keys.onPressed: {
+                    if (event.isAutoRepeat) {
+                        return
+                    }
 
                     if (api.keys.isAccept(event)) {
                         event.accepted = true;
                         api.memory.set("currentMenuIndex", currentMenuIndex)
                         currentGame.launch()
+                        return
                     }
 
                     if (event.key == Qt.Key_Right) {
                         event.accepted = true;
                         home.state = "last_played"
+                        return
                     }
 
                     if (event.key == Qt.Key_Down && sort_favorites.count > 0) {
                         event.accepted = true;
                         lastIsDefault = true
                         home.state = "favorites"
+                        return
                     }
-
                 }
 
             }
@@ -237,7 +242,6 @@ FocusScope {
                 }
 
                 Keys.onPressed: {
-
                     if (event.isAutoRepeat) {
                         return
                     }
@@ -246,6 +250,7 @@ FocusScope {
                         event.accepted = true;
                         api.memory.set("currentMenuIndex", currentMenuIndex)
                         currentGame.launch()
+                        return
                     }
 
                     if (event.key == Qt.Key_Left) {
@@ -254,12 +259,14 @@ FocusScope {
                             home.state = "last_played_default"
                         else
                             currentLastPlayedIndex--
+                        return
                     }
 
                     if (event.key == Qt.Key_Right) {
                         event.accepted = true;
                         if ( [0,1,3,4].includes(currentLastPlayedIndex) )
                             currentLastPlayedIndex++
+                        return
                     }
 
                     if (event.key == Qt.Key_Down) {
@@ -272,14 +279,15 @@ FocusScope {
                             lastIsDefault = false
                             home.state = "favorites"
                         }
+                        return
                     }
 
                     if (event.key == Qt.Key_Up) {
                         event.accepted = true;
                         if ( [3,4,5].includes(currentLastPlayedIndex) )
                             currentLastPlayedIndex -=3
+                        return
                     }
-
                 }
 
             }
@@ -344,7 +352,6 @@ FocusScope {
             }
 
             Keys.onPressed: {
-
                 if (event.isAutoRepeat) {
                     return
                 }
@@ -353,11 +360,13 @@ FocusScope {
                     event.accepted = true;
                     api.memory.set("currentMenuIndex", currentMenuIndex)
                     currentGame.launch()
+                    return
                 }
 
                 if (event.key == Qt.Key_Up) {
                     event.accepted = true;
                     home.state = lastIsDefault ? "last_played_default" : "last_played"
+                    return
                 }
 
             }

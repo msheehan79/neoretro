@@ -455,7 +455,7 @@ FocusScope {
                         api.memory.set("currentMenuIndex", currentMenuIndex)
                         currentGame.launch()
                     }
-
+                    return
                 }
 
                 if (api.keys.isFilters(event)) {
@@ -471,6 +471,7 @@ FocusScope {
                 if (api.keys.isCancel(event)) {
                     event.accepted = true;
                     currentMenuIndex = 1
+                    return
                 }
 
                 if (api.keys.isDetails(event)) {
@@ -478,7 +479,7 @@ FocusScope {
                     if (currentGame !== null) {
                         currentGame.favorite = !currentGame.favorite
                     }
-
+                    return
                 }
 
                 if (api.keys.isPageDown(event)) {

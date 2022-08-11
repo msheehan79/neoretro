@@ -382,16 +382,22 @@ FocusScope {
     }
 
     Keys.onPressed: {
+        if (event.isAutoRepeat) {
+            return
+        }
+
         if (api.keys.isPrevPage(event)) {
             event.accepted = true;
             if (currentMenuIndex > 0)
                 currentMenuIndex--
+            return
         }
 
         if (api.keys.isNextPage(event)) {
             event.accepted = true;
             if (currentMenuIndex < (dataMenu.length - 1))
                 currentMenuIndex++
+            return
         }
     }
 
