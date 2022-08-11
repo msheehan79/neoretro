@@ -69,7 +69,6 @@ FocusScope {
 
             focus: collections.focus
 
-            // model: api.collections
             model: allCollections
             currentIndex: currentCollectionIndex
 
