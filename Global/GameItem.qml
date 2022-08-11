@@ -33,6 +33,76 @@ Item {
         //     }
         // }
 
+        // Favourite tag
+        Item {
+            id: favetag
+            anchors {
+                fill: parent
+            }
+            opacity: model.favorite && root.state === "games" ? 1 : 0
+            Behavior on opacity {
+                NumberAnimation { duration: 100 }
+            }
+
+            Image {
+                id: favebg
+                anchors {
+                    top: parent.top
+                    topMargin: vpx(0)
+                    right: parent.right
+                    rightMargin: vpx(0)
+                }
+                source: "../assets/favebg.svg"
+                width: vpx(32)
+                height: vpx(32)
+                sourceSize {
+                    width: vpx(32)
+                    height: vpx(32)
+                }
+                visible: false
+            }
+
+            ColorOverlay {
+                anchors.fill: favebg
+                source: favebg
+                color: "#ED3496"
+                z: 10
+            }
+
+            Image {
+                id: star
+                anchors {
+                    top: parent.top
+                    topMargin: vpx(3)
+                    right: parent.right
+                    rightMargin: vpx(3)
+                }
+                source: "../assets/star.svg"
+                width: vpx(13)
+                height: vpx(13)
+                sourceSize {
+                    width: vpx(32)
+                    height: vpx(32)
+                }
+                smooth: true
+                z: 11
+            }
+
+            z: 12
+            layer.enabled: true
+            layer.effect: OpacityMask {
+                maskSource: Item {
+                    width: favetag.width
+                    height: favetag.height
+
+                    Rectangle {
+                        anchors.centerIn: parent
+                        width: favetag.width
+                        height: favetag.height
+                    }
+                }
+            }
+        }
         Image {
             id: img_game_logo
             source: model.assets.logo
@@ -59,7 +129,6 @@ Item {
             wrapMode: Text.Wrap
 
             visible: model.assets.logo === ""
-            
         }
 
         Rectangle {
@@ -71,31 +140,15 @@ Item {
             }
         }
 
-        // Rectangle {
-        //     width: vpx(25)
-        //     height: vpx(25)
-        //     color: doubleFocus ? "#00991E" : "#191919"
-        //     anchors {
-        //         top: parent.top
-        //         left: parent.left
-        //     }
-
-        //     Image {
-        //         id: img_heart
-        //         width: vpx(12)
-        //         height: vpx(12)
-        //         sourceSize.width: width
-        //         sourceSize.height: height
-        //         anchors {
-        //             bottom: parent.bottom; bottomMargin: vpx(5)
-        //             right: parent.right; rightMargin: vpx(5)
-        //         }
-        //         source: "../assets/heart.png"
-        //         fillMode: Image.PreserveAspectFit
-        //     }
-
-        //     visible: (root.state !== "home" && model.favorite)
-        // }
+        Rectangle {
+            anchors.fill: parent
+            color: "transparent"
+            border {
+                width: vpx(5)
+                color: "#00991E"
+            }
+            visible: doubleFocus
+        }
 
         Rectangle {
             width: parent.height * 0.2
@@ -117,15 +170,16 @@ Item {
             visible: doubleFocus
         }
 
-        Rectangle {
-            anchors.fill: parent
-            color: "transparent"
-            border {
-                width: vpx(5)
-                color: "#ED3496"
-            }
-            visible: model.favorite && root.state === "games"
-        }
+        // original favorites marker (border)
+        //Rectangle {
+        //    anchors.fill: parent
+        //    color: "transparent"
+        //    border {
+        //        width: vpx(5)
+        //        color: "#ED3496"
+        //    }
+        //    visible: model.favorite && root.state === "games"
+        //}
 
         // Image {
         //     width: parent.width * 0.6
