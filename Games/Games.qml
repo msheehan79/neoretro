@@ -117,9 +117,11 @@ FocusScope {
 
                     // RATING
                     RatingStars {
+                        id: ratingSection
                         readonly property var rating: (currentGame.rating *5).toFixed(1)
                         anchors {
-                            top: parent.top; topMargin: parent.height * 0.1
+                            top: parent.top; 
+                            topMargin: parent.height * 0.1
                             right: parent.right
                         }
                     }
@@ -129,7 +131,8 @@ FocusScope {
                         spacing: vpx(10)
                         width: parent.width
                         anchors {
-                            bottom: parent.bottom; bottomMargin: vpx(20)
+                            bottom: parent.bottom; 
+                            bottomMargin: vpx(20)
                         }
 
                         Text {
