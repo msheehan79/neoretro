@@ -8,6 +8,8 @@ import "../Global"
 FocusScope {
     focus: games.focus
 
+    property var shortname: clearShortname(currentCollection.shortName)
+
     state: "all"
 
     property int currentGameIndex: 0
@@ -40,7 +42,7 @@ FocusScope {
 
     Rectangle {
         id: skew_color
-        readonly property var touch_color: dataConsoles[clearShortname(currentCollection.shortName)].color
+        readonly property var touch_color: (dataConsoles[shortname] !== undefined) ? dataConsoles[shortname].color : dataConsoles["default"].color
         width: parent.width * 0.42
         height: parent.height
         antialiasing: true
