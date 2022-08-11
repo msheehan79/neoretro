@@ -4,8 +4,8 @@ import QtGraphicalEffects 1.12
 Item {
     property var isCurrentItem: PathView.isCurrentItem
     property var shortname: clearShortname(modelData.shortName)
-    property var manufacturer: dataConsoles[shortname].manufacturer || null
-    property var release: dataConsoles[shortname].release || null
+    property var manufacturer: (dataConsoles[shortname] !== undefined) ? dataConsoles[shortname].manufacturer : null
+    property var release: (dataConsoles[shortname] !== undefined) ? dataConsoles[shortname].release : dataConsoles["default"].release
     property var manufacturerColor: (manufacturer !== null) ? dataManufacturers[manufacturer].color : "black"
 
     width: PathView.view.width
@@ -32,7 +32,7 @@ Item {
                     id: img_logo
                     anchors.fill: parent
                     sourceSize.width: width
-                    source: "../assets/collections/logo/"+shortname+".png"
+                    source: "../assets/collections/logo/" + shortname
                     verticalAlignment: Image.AlignBottom
                     fillMode: Image.PreserveAspectFit
                 }
@@ -61,7 +61,7 @@ Item {
                     topMargin: vpx(25)
                     horizontalCenter: img_collection_logo.horizontalCenter
                 }
-                text: modelData.games.count+" games available"
+                text: modelData.games.count + " games available"
                 font {
                     family: robotoSlabLight.name
                     pixelSize: vpx(20)
@@ -93,7 +93,7 @@ Item {
                             anchors.fill: parent
                             sourceSize.width: width
                             sourceSize.height: height
-                            source: (manufacturer !== null) ? "../assets/manufacturers/logo/"+manufacturer+".svg" : ""
+                            source: (manufacturer !== null) ? "../assets/manufacturers/logo/" + manufacturer : ""
                             fillMode: Image.PreserveAspectFit
                         }
                     }
@@ -114,7 +114,7 @@ Item {
                         pixelSize: vpx(18)
                     }
                     bottomPadding: vpx(2)
-                    color: manufacturerColor
+                    color: (manufacturerColor !== '#ffffff') ? manufacturerColor : "black"
                 }
             }
 
@@ -128,7 +128,5 @@ Item {
         asynchronous: true
         active: ( root.state === "collections" )
     }
-
-
 
 }
