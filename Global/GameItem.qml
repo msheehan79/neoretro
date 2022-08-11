@@ -103,6 +103,52 @@ Item {
                 }
             }
         }
+
+        // Completed Game Ribbon
+        Item {
+            visible: (model.extra.completed !== undefined) && (model.extra.completed.toString() === 'True') && (root.state === "games") ? true : false
+            anchors {
+                bottom: parent.bottom
+                left: parent.left
+                right: parent.right
+            }
+            width: parent.width
+            height: parent.height / 5
+
+            Image {
+                id: completedbg
+                anchors {
+                    centerIn: parent
+                }
+                source: "../assets/ribbon.svg"
+                fillMode: Image.PreserveAspectFit
+                height: vpx(18)
+            }
+
+            Text {
+                anchors {
+                    centerIn: completedbg
+                    verticalCenterOffset: vpx(-3)
+                }
+                text: "COMPLETED"
+                font {
+                    family: montserratMedium.name
+                    weight: Font.Bold
+                    pixelSize: vpx(10)
+                }
+                color: "white"
+                z: 15
+            }
+
+            ColorOverlay {
+                anchors.fill: completedbg
+                source: completedbg
+                cached: true
+                color: "#ff6400"
+                z: 10
+            }
+        }
+
         Image {
             id: img_game_logo
             source: model.assets.logo
