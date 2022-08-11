@@ -24,12 +24,6 @@ FocusScope {
     }
 
     SortFilterProxyModel {
-        id: sort_last_played_base
-        sourceModel: api.allGames
-        sorters: RoleSorter { roleName: "lastPlayed"; sortOrder: Qt.DescendingOrder; }
-    }
-
-    SortFilterProxyModel {
         id: sort_favorites
         sourceModel: api.allGames
         sorters: RoleSorter { roleName: "lastPlayed"; sortOrder: Qt.DescendingOrder; }
@@ -46,14 +40,14 @@ FocusScope {
     // 1 game to show maximum
     SortFilterProxyModel {
         id: sort_last_played_big
-        sourceModel: sort_last_played_base
+        sourceModel: lastPlayedBase
         filters: IndexFilter { maximumIndex: 0; }
     }
 
     // 6 games to show maximum
     SortFilterProxyModel {
         id: sort_last_played
-        sourceModel: sort_last_played_base
+        sourceModel: lastPlayedBase
         filters: IndexFilter { minimumIndex: 1; maximumIndex: 6; }
     }
 

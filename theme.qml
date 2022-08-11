@@ -28,6 +28,8 @@ FocusScope {
 
     property var allCollections: {
         var collections = api.collections.toVarArray();
+        collections.unshift({"name": "Favorites", "shortName": "favorites", "games": allFavorites, "extra": {"collectiontype": "System"}});
+        collections.unshift({"name": "Last Played", "shortName": "lastplayed", "games": lastPlayed, "extra": {"collectiontype": "System"}});
         collections = collections.filter(systemCollection);
 
         // collections.unshift({"name": "favorites", "shortName": "favorites", "games": allFavorites})
@@ -255,13 +257,25 @@ FocusScope {
         "scummvm":            { manufacturer: null,                release: null,   color: "#000000", altColor: "#252525", fullName: "PC"                            },
     }
 
+    // Define Last Played and Favorites collections
     SortFilterProxyModel {
         id: allFavorites
         sourceModel: api.allGames
         filters: ValueFilter { roleName: "favorite"; value: true; }
     }
 
-    // state: api.memory.get("currentPageState") || "home_lastPlayed"
+    SortFilterProxyModel {
+        id: lastPlayedBase
+        sourceModel: api.allGames
+        sorters: RoleSorter { roleName: "lastPlayed"; sortOrder: Qt.DescendingOrder; }
+    }
+
+    SortFilterProxyModel {
+        id: lastPlayed
+        sourceModel: lastPlayedBase
+        filters: IndexFilter { maximumIndex: 49; }
+    }
+
     state: dataMenu[currentMenuIndex].name
 
     transitions: [
