@@ -214,7 +214,7 @@ FocusScope {
     Controls {
         id: button_B
         anchors {
-            bottom: parent.bottom; bottomMargin: vpx(40)
+            bottom: parent.bottom; bottomMargin: vpx(15)
             left: parent.left; leftMargin: vpx(40)
         }
 
@@ -229,8 +229,8 @@ FocusScope {
     Controls {
         id: button_A
         anchors {
-            bottom: parent.bottom; bottomMargin: vpx(40)
-            right: parent.right; rightMargin: vpx(150)
+            bottom: parent.bottom; bottomMargin: vpx(15)
+            left: skew_color.right; leftMargin: -vpx(110);
         }
 
         message: "<b>"+currentCollection.name+"</b> GAMES"
