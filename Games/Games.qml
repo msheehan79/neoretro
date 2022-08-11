@@ -243,6 +243,52 @@ FocusScope {
                                     visible: (modelData !== "")
                                 }
                             }
+
+                            Rectangle {
+                                width: txt_arcadeport.contentWidth + vpx(20)
+                                height: txt_arcadeport.contentHeight + vpx(10)
+                                color: (dataConsoles[shortname] !== undefined) ? dataConsoles[shortname].altColor : dataConsoles["default"].altColor
+                                border {
+                                    width: vpx(1)
+                                    color: (dataConsoles[shortname] !== undefined) ? dataConsoles[shortname].altColor : dataConsoles["default"].altColor
+                                }
+
+                                Text {
+                                    id: txt_arcadeport
+                                    anchors.centerIn: parent
+                                    text: "Arcade Port"
+                                    font {
+                                        family: global.fonts.sans
+                                        weight: Font.Medium
+                                        pixelSize: vpx(12)
+                                    }
+                                    color: "white"
+                                }
+                                visible: (currentGame.extra.arcadeport !== undefined) && (currentGame.extra.arcadeport.toString() === 'True')
+                            }
+
+                            Rectangle {
+                                width: txt_controller.contentWidth + vpx(20)
+                                height: txt_controller.contentHeight + vpx(10)
+                                color: "black"
+                                border {
+                                    width: vpx(1)
+                                    color: "black"
+                                }
+
+                                Text {
+                                    id: txt_controller
+                                    anchors.centerIn: parent
+                                    text: "Controller: " + currentGame.extra.emucontroller
+                                    font {
+                                        family: global.fonts.sans
+                                        weight: Font.Medium
+                                        pixelSize: vpx(12)
+                                    }
+                                    color: "white"
+                                }
+                                visible: (currentGame.extra.emucontroller !== "")
+                            }
                         }
 
                         Item {
