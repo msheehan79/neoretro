@@ -195,6 +195,30 @@ FocusScope {
                                 }
                                 color: "black"
                             }
+
+                            Text {
+                                text: "for"
+                                font {
+                                    family: global.fonts.sans
+                                    weight: Font.Light
+                                    italic: true
+                                    pixelSize: vpx(14)
+                                }
+                                color: "black"
+                                visible: customCollection
+                            }
+
+                            Text {
+                                text: dataConsoles[currentGame.extra.system].fullName
+                                font {
+                                    family: global.fonts.sans
+                                    weight: Font.Medium
+                                    pixelSize: vpx(14)
+                                }
+                                color: "black"
+                                visible: customCollection
+                            }
+
                         }
 
                         Row {
