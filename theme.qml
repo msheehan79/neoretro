@@ -335,13 +335,11 @@ FocusScope {
         }
     ]
 
-
     Rectangle {
         id: rect_main
         width: parent.width
         height: parent.height
         color: "white"
-
     }
 
     Home {
