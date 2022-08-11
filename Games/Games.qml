@@ -390,7 +390,6 @@ FocusScope {
             anchors.horizontalCenter: parent.horizontalCenter
 
             clip: true
-            // interactive: false
 
             preferredHighlightBegin: height * 0.5
             preferredHighlightEnd: height * 0.5
@@ -445,7 +444,6 @@ FocusScope {
             }
 
             Keys.onPressed: {
-
                 if (event.isAutoRepeat) {
                     return
                 }
