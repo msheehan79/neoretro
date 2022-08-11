@@ -8,6 +8,15 @@ import "../Global"
 FocusScope {
     focus: games.focus
 
+    property int sortIndex: api.memory.get('sortIndex') || 0
+    readonly property var sortFields: ['sortTitle', 'release', 'rating', 'genre', 'lastPlayed', 'favorite']
+    readonly property var sortLabels: {'sortTitle':'Title', 'release':'Release Date', 'rating':'Rating', 'genre':'Genre', 'lastPlayed':'Last Played', 'favorite':'Favorite'}
+    readonly property string sortField: sortFields[sortIndex]
+    readonly property string collectionType: currentCollection.extra.collectiontype != undefined ? currentCollection.extra.collectiontype.toString() : 'System'
+    readonly property var customSortCategories: ['Custom', 'Series']
+    readonly property var customSystemLogoCategories: ['Custom', 'Series']
+    readonly property bool customCollection: customSystemLogoCategories.includes(collectionType)
+
     property var shortname: clearShortname(currentCollection.shortName)
 
     state: "all"
@@ -16,16 +25,31 @@ FocusScope {
     property var currentGame: {
         if (gv_games.count === 0)
             return null;
-        if (games.state === "favorites")
-            return currentCollection.games.get(filteredGames.mapToSource(currentGameIndex))
-
-        return currentCollection.games.get(currentGameIndex)
+        return currentCollection.games.get(filteredGames.mapToSource(currentGameIndex))
     }
 
     SortFilterProxyModel {
         id: filteredGames
         sourceModel: currentCollection.games
-        filters: ValueFilter { roleName: "favorite"; value: true; }
+        sorters: [
+            RoleSorter {
+                roleName: sortField
+                sortOrder: sortField == 'rating' || sortField == 'lastPlayed' || sortField == 'favorite' ? Qt.DescendingOrder : Qt.AscendingOrder
+                enabled: !customSortCategories.includes(collectionType) && currentCollection.shortName !== 'lastplayed' && root.state === "games"
+            },
+            ExpressionSorter {
+                expression: {
+                    if (!customSortCategories.includes(collectionType)) {
+                        return true;
+                    }
+
+                    var sortLeft = getCollectionSortValue(modelLeft, currentCollection.shortName);
+                    var sortRight = getCollectionSortValue(modelRight, currentCollection.shortName);
+                    return (sortLeft < sortRight);
+                }
+                enabled: customSortCategories.includes(collectionType) && root.state === "games"
+            }
+        ]
     }
 
     Behavior on focus {
@@ -446,11 +470,7 @@ FocusScope {
             currentIndex: currentGameIndex
             onCurrentIndexChanged: currentGameIndex = currentIndex
 
-            model: {
-                if (games.state === "favorites")
-                    return filteredGames
-                return currentCollection.games
-            }
+            model: filteredGames
             delegate: Item {
                 property bool isCurrentItem: GridView.isCurrentItem
                 property bool isFocused: games.focus
@@ -489,6 +509,7 @@ FocusScope {
             focus: games.focus
 
             Component.onCompleted: {
+                currentGameIndex = api.memory.get(collectionType + "-" + currentCollectionIndex + "-currentGameIndex") || 0
                 positionViewAtIndex(currentGameIndex, GridView.SnapPosition)
             }
 
@@ -500,8 +521,7 @@ FocusScope {
                 if (api.keys.isAccept(event)) {
                     event.accepted = true;
                     if (currentGame !== null) {
-                        api.memory.set("currentCollectionIndex", currentCollectionIndex)
-                        api.memory.set("currentMenuIndex", currentMenuIndex)
+                        saveCurrentState(currentGameIndex, sortIndex)
                         currentGame.launch()
                     }
                     return
@@ -509,12 +529,8 @@ FocusScope {
 
                 if (api.keys.isFilters(event)) {
                     event.accepted = true;
-                    if (games.state === "all") {
-                        games.state = "favorites"
-                    }
-                    else {
-                        games.state = "all"
-                    }
+                    sortIndex = (sortIndex + 1) % sortFields.length;
+                    return
                 }
 
                 if (api.keys.isCancel(event)) {
@@ -637,12 +653,26 @@ FocusScope {
         Controls {
             id: button_Y
 
-            message: ( games.state === "all" ) ? "SHOW <b>ALL ·</b> FAVORITES" : "SHOW ALL <b>· FAVORITES</b>"
+            message: "SORTED BY <b>" + getSortLabel() + "</b>";
 
             text_color: "black"
             front_color: "#FDB200"
             back_color: "white"
             input_button: "Y"
+        }
+    }
+
+    function getCollectionSortValue(gameData, collName) {
+        return gameData.extra['customsort-' + collName] !== undefined ? gameData.extra['customsort-' + collName] : "";
+    }
+
+    function getSortLabel() {
+        if (currentCollection.shortName == 'lastplayed') {
+            return 'Last Played';
+        } else if (customSortCategories.includes(collectionType)) {
+            return 'Custom';
+        } else {
+            return sortLabels[sortField];
         }
     }
 
