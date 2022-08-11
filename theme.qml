@@ -23,8 +23,12 @@ FocusScope {
     // [2] = GAMES
     property int currentMenuIndex: api.memory.get("currentMenuIndex") || 0
 
+    property var collectionType: api.memory.get("currentCollectionType") || "System"
+    property var collectionTypes: getAllCollectionTypes()
+
     property var allCollections: {
-        const collections = api.collections.toVarArray()
+        var collections = api.collections.toVarArray();
+        collections = collections.filter(systemCollection);
 
         // collections.unshift({"name": "favorites", "shortName": "favorites", "games": allFavorites})
 
@@ -73,7 +77,7 @@ FocusScope {
         return collections
     }
 
-    property int currentCollectionIndex: api.memory.get("currentCollectionIndex") || 0
+    property int currentCollectionIndex: api.memory.get("currentCollectionIndex-" + collectionType) || 0
     property var currentCollection: allCollections[currentCollectionIndex]
 
     property variant dataMenu: [
@@ -399,6 +403,45 @@ FocusScope {
                 currentMenuIndex++
             return
         }
+
+        if (api.keys.isFilters(event)) {
+            var index = collectionTypes.indexOf(collectionType) + 1;
+            collectionType = (index < collectionTypes.length) ? collectionTypes[index] : collectionTypes[0];
+            currentCollectionIndex = api.memory.get("currentCollectionIndex-" + collectionType) || 0;
+            games.currentGameIndex = 0;
+            return
+        }
+    }
+
+    function saveCurrentState(currentGameIndex, sortIndex) {
+        api.memory.set("currentMenuIndex", currentMenuIndex);
+        api.memory.set("currentCollectionType", collectionType);
+        api.memory.set("currentCollectionIndex-" + collectionType, currentCollectionIndex);
+        if (sortIndex !== undefined) {
+            api.memory.set('sortIndex', sortIndex);
+        }
+        if (currentGameIndex !== undefined) {
+            api.memory.set(collectionType + "-" + currentCollectionIndex + "-currentGameIndex", currentGameIndex);
+        }
+    }
+
+    function systemCollection(coll) {
+        if (coll.extra.collectiontype != undefined) {
+            return coll.extra.collectiontype.toString() == collectionType;
+        } else {
+            return true;
+        }
+    }
+
+    function getAllCollectionTypes() {
+        var types = ['System'];
+        var collections = api.collections.toVarArray().forEach(function(value, index, array) {
+                if (value.extra.collectiontype != undefined) {
+                    types.push(value.extra.collectiontype.toString());
+                }
+            }
+        );
+        return Array.from(new Set(types));
     }
 
     // SoundEffect {

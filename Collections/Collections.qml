@@ -54,6 +54,35 @@ FocusScope {
 
     }
 
+    Text {
+        id: txt_collectionType
+        anchors {
+            top: parent.top; topMargin: vpx(85)
+            right: parent.right; rightMargin: vpx(25)
+        }
+
+        text: collectionType + " Collections"
+        font {
+            family: global.fonts.sans
+            weight: Font.Black
+            italic: true
+            pixelSize: vpx(40)
+            capitalization: Font.AllUppercase
+        }
+        color: "#F0F0F0"
+
+        Behavior on text {
+            PropertyAnimation {
+                target: txt_collectionType
+                property: "opacity"
+                from: 0
+                to: 1
+                duration: 600
+                easing.type: Easing.OutExpo
+            }
+        }
+    }
+
     Item {
         width: parent.width
         height: parent.height * 0.58
@@ -132,27 +161,36 @@ FocusScope {
 
                 if (event.key == Qt.Key_Left) {
                     event.accepted = true;
-                    if (currentCollectionIndex <= 0)
-                        if (event.isAutoRepeat)
-                            currentCollectionIndex = 0
-                        else
-                            currentCollectionIndex = allCollections.length - 1
-                    else
+                    if (currentCollectionIndex <= 0) {
+                        if (event.isAutoRepeat) {
+                            currentCollectionIndex = 0;
+                        } else {
+                            currentCollectionIndex = allCollections.length - 1;
+                        }
+                    } else {
                         currentCollectionIndex--;
-                        api.memory.set("currentCollectionIndex", currentCollectionIndex)
+                    }
+
+                    games.currentGameIndex = 0;
+                    saveCurrentState();
+                    return
                 }
 
                 if (event.key == Qt.Key_Right) {
                     event.accepted = true;
-
-                    if (currentCollectionIndex >= allCollections.length - 1)
-                        if (event.isAutoRepeat)
+                    if (currentCollectionIndex >= allCollections.length - 1) {
+                        if (event.isAutoRepeat) {
                             currentCollectionIndex = allCollections.length - 1;
-                        else
+                        } else {
                             currentCollectionIndex = 0;
-                    else
+                        }
+                    } else {
                         currentCollectionIndex++;
-                        api.memory.set("currentCollectionIndex", currentCollectionIndex)
+                    }
+
+                    games.currentGameIndex = 0;
+                    saveCurrentState();
+                    return
                 }
             }
 
@@ -225,6 +263,21 @@ FocusScope {
         front_color: "#E6140D"
         back_color: "white"
         input_button: "B"
+    }
+
+    Controls {
+        id: button_Y
+        anchors {
+            bottom: parent.bottom; bottomMargin: vpx(15)
+            right: parent.right; rightMargin: vpx(150)
+        }
+
+        message: "SWITCH <b>COLLECTION CATEGORY</b>"
+
+        text_color: "black"
+        front_color: "#FDB200"
+        back_color: "white"
+        input_button: "Y"
     }
 
     Controls {
