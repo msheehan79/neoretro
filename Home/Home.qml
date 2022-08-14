@@ -14,9 +14,9 @@ FocusScope {
 
     property var currentGame: {
         if (home.state === "last_played_default")
-            return api.allGames.get(sort_last_played_base.mapToSource(0))
+            return api.allGames.get(lastPlayedBase.mapToSource(0))
         if (home.state === "last_played")
-            return api.allGames.get(sort_last_played_base.mapToSource(currentLastPlayedIndex+1))
+            return api.allGames.get(lastPlayedBase.mapToSource(currentLastPlayedIndex+1))
         if (home.state === "favorites")
             return api.allGames.get(sort_favorites.mapToSource(currentFavoritesIndex))
         else

@@ -25,7 +25,7 @@ FocusScope {
     property var currentGame: {
         if (gv_games.count === 0)
             return null;
-        return currentCollection.games.get(filteredGames.mapToSource(currentGameIndex))
+        return findCurrentGameFromProxy(currentGameIndex, currentCollection);
     }
 
     SortFilterProxyModel {
@@ -683,6 +683,17 @@ FocusScope {
             front_color: "#FDB200"
             back_color: "white"
             input_button: "Y"
+        }
+    }
+
+    function findCurrentGameFromProxy(idx, collection) {
+        // Last Played collection uses 2 filters chained together
+        if (collection.name == "Last Played") {
+            return api.allGames.get(lastPlayedBase.mapToSource(idx));
+        } else if (collection.name == "Favorites") {
+            return api.allGames.get(allFavorites.mapToSource(idx));
+        } else {
+            return currentCollection.games.get(filteredGames.mapToSource(idx))
         }
     }
 
