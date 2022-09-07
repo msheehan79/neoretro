@@ -106,10 +106,6 @@ FocusScope {
         "commodore": { color: "#ffffff" }
     }
 
-    function clearShortname(shortname) {
-        return dataLaunchbox[shortname] ? dataLaunchbox[shortname] : shortname
-    }
-
     property var dataLaunchbox: {
         "amstrad cpc" :                             "amstradcpc",
         "apple ii" :                                "apple2",
@@ -365,7 +361,7 @@ FocusScope {
         width: root.width
         height: root.height * 0.9
         anchors.bottom: root.bottom
-        focus: ( root.state === "home" )
+        focus: (root.state === "home")
         opacity: focus
         visible: opacity
     }
@@ -374,7 +370,7 @@ FocusScope {
         id: collections
         width: root.width
         height: root.height
-        focus: ( root.state === "collections" )
+        focus: (root.state === "collections")
         opacity: focus
         visible: opacity
     }
@@ -384,7 +380,7 @@ FocusScope {
         width: root.width
         height: root.height * 0.9
         anchors.bottom: root.bottom
-        focus: ( root.state === "games" )
+        focus: (root.state === "games")
         opacity: focus
         visible: opacity
     }
@@ -401,21 +397,21 @@ FocusScope {
 
     Keys.onPressed: {
         if (event.isAutoRepeat) {
-            return
+            return;
         }
 
         if (api.keys.isPrevPage(event)) {
             event.accepted = true;
             if (currentMenuIndex > 0)
-                currentMenuIndex--
-            return
+                currentMenuIndex--;
+            return;
         }
 
         if (api.keys.isNextPage(event)) {
             event.accepted = true;
             if (currentMenuIndex < (dataMenu.length - 1))
-                currentMenuIndex++
-            return
+                currentMenuIndex++;
+            return;
         }
 
         if (api.keys.isFilters(event)) {
@@ -423,8 +419,12 @@ FocusScope {
             collectionType = (index < collectionTypes.length) ? collectionTypes[index] : collectionTypes[0];
             currentCollectionIndex = api.memory.get("currentCollectionIndex-" + collectionType) || 0;
             games.currentGameIndex = 0;
-            return
+            return;
         }
+    }
+
+    function clearShortname(shortname) {
+        return dataLaunchbox[shortname] ? dataLaunchbox[shortname] : shortname;
     }
 
     function saveCurrentState(currentGameIndex, sortIndex) {
@@ -457,11 +457,5 @@ FocusScope {
         );
         return Array.from(new Set(types));
     }
-
-    // SoundEffect {
-    //     id: sfxFlip
-    //     source: "assets/sounds/flip_card.wav"
-    //     volume: 0.5
-    // }
 
 }
