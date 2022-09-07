@@ -16,7 +16,7 @@ FocusScope {
         if (home.state === "last_played_default")
             return api.allGames.get(sort_last_played_base.mapToSource(0))
         if (home.state === "last_played")
-            return api.allGames.get(sort_last_played_base.mapToSource(currentLastPlayedIndex+1))
+            return api.allGames.get(sort_last_played_base.mapToSource(currentLastPlayedIndex + 1))
         if (home.state === "favorites")
             return api.allGames.get(sort_favorites.mapToSource(currentFavoritesIndex))
         else
@@ -82,7 +82,8 @@ FocusScope {
         height: parent.height
         antialiasing: true
         anchors {
-            left: parent.left; leftMargin: parent.width * 0.08
+            left: parent.left
+            leftMargin: parent.width * 0.08
         }
         color: "#000000"
 
@@ -95,7 +96,6 @@ FocusScope {
                 0,      0,                  0,      1
             )
         }
-
     }
 
     Column {
@@ -104,12 +104,13 @@ FocusScope {
         height: childrenRect.height
         anchors {
             horizontalCenter: parent.horizontalCenter
-            top: parent.top; topMargin: vpx(40)
+            top: parent.top
+            topMargin: vpx(40)
         }
         spacing: vpx(10)
 
         Text {
-            text: ( home.state === "last_played" || home.state === "last_played_default" ) ? "– Continue playing" : "Continue playing"
+            text: (home.state === "last_played" || home.state === "last_played_default") ? "– Continue playing" : "Continue playing"
             font {
                 family: robotoSlabLight.name
                 pixelSize: vpx(22)
@@ -152,16 +153,11 @@ FocusScope {
                     }
                 }
 
-                // clip: true
-
                 highlightRangeMode: ListView.ApplyRange
                 snapMode: ListView.NoSnap
                 highlightMoveDuration: vpx(150)
                 interactive: false
-
-
-
-                focus: ( home.state === "last_played_default" )
+                focus: (home.state === "last_played_default")
 
                 Component.onCompleted: {
                     positionViewAtIndex(0, ListView.SnapPosition)
@@ -169,38 +165,37 @@ FocusScope {
 
                 Keys.onPressed: {
                     if (event.isAutoRepeat) {
-                        return
+                        return;
                     }
 
                     if (api.keys.isAccept(event)) {
                         event.accepted = true;
-                        api.memory.set("currentMenuIndex", currentMenuIndex)
-                        currentGame.launch()
-                        return
+                        api.memory.set("currentMenuIndex", currentMenuIndex);
+                        currentGame.launch();
+                        return;
                     }
 
                     if (event.key == Qt.Key_Right) {
                         event.accepted = true;
-                        home.state = "last_played"
-                        return
+                        home.state = "last_played";
+                        return;
                     }
 
                     if (event.key == Qt.Key_Down && sort_favorites.count > 0) {
                         event.accepted = true;
-                        lastIsDefault = true
-                        home.state = "favorites"
-                        return
+                        lastIsDefault = true;
+                        home.state = "favorites";
+                        return;
                     }
                 }
-
             }
 
             GridView {
                 id: gv_lastPlayed
                 width: main.width * 0.6
                 height: parent.height
-                cellWidth: width /3
-                cellHeight: height /2
+                cellWidth: width / 3
+                cellHeight: height / 2
 
                 currentIndex: currentLastPlayedIndex
                 onCurrentIndexChanged: currentLastPlayedIndex = currentIndex
@@ -230,12 +225,9 @@ FocusScope {
                     }
                 }
 
-                // clip: true
-
                 highlightMoveDuration: vpx(150)
                 interactive: false
-
-                focus: ( home.state === "last_played" )
+                focus: (home.state === "last_played")
 
                 Component.onCompleted: {
                     positionViewAtIndex(currentLastPlayedIndex, GridView.SnapPosition)
@@ -243,58 +235,58 @@ FocusScope {
 
                 Keys.onPressed: {
                     if (event.isAutoRepeat) {
-                        return
+                        return;
                     }
 
                     if (api.keys.isAccept(event)) {
                         event.accepted = true;
-                        api.memory.set("currentMenuIndex", currentMenuIndex)
-                        currentGame.launch()
-                        return
+                        api.memory.set("currentMenuIndex", currentMenuIndex);
+                        currentGame.launch();
+                        return;
                     }
 
                     if (event.key == Qt.Key_Left) {
                         event.accepted = true;
-                        if ( [0,3].includes(currentLastPlayedIndex) )
-                            home.state = "last_played_default"
-                        else
-                            currentLastPlayedIndex--
-                        return
+                        if ([0,3].includes(currentLastPlayedIndex)) {
+                            home.state = "last_played_default";
+                        } else {
+                            currentLastPlayedIndex--;
+                        }
+                        return;
                     }
 
                     if (event.key == Qt.Key_Right) {
                         event.accepted = true;
-                        if ( [0,1,3,4].includes(currentLastPlayedIndex) )
-                            currentLastPlayedIndex++
-                        return
+                        if ([0,1,3,4].includes(currentLastPlayedIndex)) {
+                            currentLastPlayedIndex++;
+                        }
+                        return;
                     }
 
                     if (event.key == Qt.Key_Down) {
                         event.accepted = true;
-                        if ( [0,1,2].includes(currentLastPlayedIndex) ) {
-                            currentLastPlayedIndex +=3
+                        if ([0,1,2].includes(currentLastPlayedIndex)) {
+                            currentLastPlayedIndex +=3;
+                        } else if (sort_favorites.count > 0) {
+                            lastIsDefault = false;
+                            home.state = "favorites";
                         }
-
-                        else if (sort_favorites.count > 0) {
-                            lastIsDefault = false
-                            home.state = "favorites"
-                        }
-                        return
+                        return;
                     }
 
                     if (event.key == Qt.Key_Up) {
                         event.accepted = true;
-                        if ( [3,4,5].includes(currentLastPlayedIndex) )
-                            currentLastPlayedIndex -=3
-                        return
+                        if ([3,4,5].includes(currentLastPlayedIndex)) {
+                            currentLastPlayedIndex -=3;
+                        }
+                        return;
                     }
                 }
-
             }
         }
 
         Text {
-            text: ( home.state === "favorites" ) ? "– Favorites" : "Favorites"
+            text: (home.state === "favorites") ? "– Favorites" : "Favorites"
             font {
                 family: robotoSlabLight.name
                 pixelSize: vpx(22)
@@ -318,7 +310,7 @@ FocusScope {
                 readonly property bool isFocused: activeFocus
                 readonly property bool doubleFocus: lv_favorites.focus && isCurrentItem
 
-                width: ListView.view.width /5
+                width: ListView.view.width / 5
                 height: ListView.view.height * 0.9
 
                 Item {
@@ -338,90 +330,46 @@ FocusScope {
             }
 
             clip: true
-
             highlightRangeMode: ListView.ApplyRange
             snapMode: ListView.SnapOneItem
             highlightMoveDuration: vpx(100)
             preferredHighlightBegin: width * 0.4
             preferredHighlightEnd: width * 0.6
-
-            focus: ( home.state === "favorites" )
+            focus: (home.state === "favorites")
 
             Component.onCompleted: {
-                    positionViewAtIndex(currentFavoritesIndex, ListView.SnapPosition)
+                positionViewAtIndex(currentFavoritesIndex, ListView.SnapPosition)
             }
 
             Keys.onPressed: {
                 if (event.isAutoRepeat) {
-                    return
+                    return;
                 }
 
                 if (api.keys.isAccept(event)) {
                     event.accepted = true;
-                    api.memory.set("currentMenuIndex", currentMenuIndex)
-                    currentGame.launch()
-                    return
+                    api.memory.set("currentMenuIndex", currentMenuIndex);
+                    currentGame.launch();
+                    return;
                 }
 
                 if (event.key == Qt.Key_Up) {
                     event.accepted = true;
-                    home.state = lastIsDefault ? "last_played_default" : "last_played"
-                    return
+                    home.state = lastIsDefault ? "last_played_default" : "last_played";
+                    return;
                 }
-
             }
-
         }
-
     }
-
-    // // Collection logo
-    // Item {
-    //     width: vpx(140)
-    //     height: vpx(35)
-    //     anchors {
-    //         bottom: parent.bottom; bottomMargin: vpx(35)
-    //         left: parent.left; leftMargin: vpx(380)
-    //     }
-
-    //     Image {
-    //         id: img_home_collection
-    //         anchors.fill: parent
-    //         sourceSize.width: width
-    //         asynchronous: true
-    //         source: "../assets/collections/logo/"+currentGame.collections.get(0).shortName+"_mono.svg"
-    //         fillMode: Image.PreserveAspectFit
-    //         verticalAlignment: Image.AlignVCenter
-    //     }
-
-    // }
-
-    // Controls {
-    //     width: childrenRect.width
-    //     height: vpx(20)
-
-    //     anchors {
-    //         bottom: parent.bottom; bottomMargin: vpx(40)
-    //         left: parent.left; leftMargin: parent.width * 0.13
-    //     }
-
-    //     button_value: "A"
-    //     message: "PLAY <b>"+currentGame.title+"</b>"
-
-    //     // message: "PLAY <b>"+currentGame.title+"</b>"
-
-    //     // text_color: "white"
-    //     // front_color: "#00991E"
-    //     // back_color: "#00991E"
-    //     // input_button: "A_reverse"
-    // }
 
     Row {
         id: play_message
+
         width: parent.width * 0.74
         height: vpx(18)
         anchors {
-            bottom: parent.bottom; bottomMargin: vpx(40)
+            bottom: parent.bottom
+            bottomMargin: vpx(40)
             horizontalCenter: parent.horizontalCenter
         }
         spacing: vpx(8)
@@ -443,8 +391,6 @@ FocusScope {
             topPadding: vpx(1)
             color: "white"
         }
-
-
     }
 
 }

@@ -63,7 +63,7 @@ FocusScope {
                             left: parent.left
                         }
                         color: "white"
-                        radius: width /4
+                        radius: width / 4
                         border {
                             width: vpx(1)
                         }
@@ -90,7 +90,7 @@ FocusScope {
                             right: parent.right
                         }
                         color: "white"
-                        radius: width /4
+                        radius: width / 4
                         border {
                             width: vpx(1)
                         }
@@ -113,35 +113,32 @@ FocusScope {
                 highlightMoveVelocity: -1
 
                 interactive: false
-
                 focus: menu.focus
-
-                Component.onCompleted: positionViewAtIndex(currentMenuIndex, ListView.Beginning)
-
                 spacing: vpx(70)
 
+                Component.onCompleted: positionViewAtIndex(currentMenuIndex, ListView.Beginning)
             }
-
         }
 
         Item {
             width: height * 2.5
             height: parent.height * 0.65
             anchors {
-                right: parent.right; rightMargin: parent.width * 0.19
+                right: parent.right
+                rightMargin: parent.width * 0.19
                 verticalCenter: parent.verticalCenter
             }
 
             Image {
                 anchors {
-                    left: parent.left; leftMargin: -width *2
+                    left: parent.left
+                    leftMargin: -width *2
                     verticalCenter: parent.verticalCenter
                 }
                 width: vpx(25)
                 source: "../assets/controls/button_LT.png"
                 sourceSize.width: width
                 fillMode: Image.PreserveAspectFit
-                //visible: root.state === "games"
                 visible: false
             }
 
@@ -157,9 +154,9 @@ FocusScope {
                         if (root.state === "collections")
                             return "";
                         if (root.state === "home")
-                            return "../assets/collections/logo/"+clearShortname(home.currentGame.collections.get(0).shortName)+".png"
+                            return "../assets/collections/logo/"+clearShortname(home.currentGame.collections.get(0).shortName) + ".png";
                         if (root.state === "games")
-                            return "../assets/collections/logo/"+clearShortname(allCollections[currentCollectionIndex].shortName)+".png"
+                            return "../assets/collections/logo/"+clearShortname(allCollections[currentCollectionIndex].shortName) + ".png";
                     }
                     fillMode: Image.PreserveAspectFit
                     horizontalAlignment: Image.AlignHCenter
@@ -188,21 +185,19 @@ FocusScope {
 
             Image {
                 anchors {
-                    right: parent.right; rightMargin: -width *2
+                    right: parent.right
+                    rightMargin: -width * 2
                     verticalCenter: parent.verticalCenter
                 }
                 width: vpx(25)
                 source: "../assets/controls/button_RT.png"
                 sourceSize.width: width
                 fillMode: Image.PreserveAspectFit
-                //visible: root.state === "games"
                 visible: false
             }
 
             visible: ["home","games"].includes(root.state)
         }
-
-
     }
 
 }

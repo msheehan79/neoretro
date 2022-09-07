@@ -36,8 +36,6 @@ Item {
             capitalization: Font.AllUppercase
             pixelSize: vpx(16)
         }
-
     }
 
 }
-

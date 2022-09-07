@@ -5,7 +5,8 @@ Item {
         width: parent.width
         height: vpx(2)
         anchors {
-            bottom: parent.bottom; bottomMargin: -vpx(4)
+            bottom: parent.bottom
+            bottomMargin: -vpx(4)
         }
         color: "black"
     }
