@@ -5,37 +5,13 @@ Item {
     width: vpx(100)
     height: vpx(20)
 
-    property variant starsMatrix: [
+    property var starsMatrix: [
         { source: getStars(0, rating) },
         { source: getStars(1, rating) },
         { source: getStars(2, rating) },
         { source: getStars(3, rating) },
         { source: getStars(4, rating) }
     ]
-
-    function getStars(index, rate) {
-        if (rate <= index) {
-            return no_star
-        }
-        else if (rate <= index+0.5) {
-            return half_star
-        }
-        else {
-            return star
-        }
-    }
-
-    function getBackgroundColor(rate) {
-        if (rate < 2.5) {
-            return "#B5714B"
-        }
-        else if (rate < 4) {
-            return "#F4F4F4"
-        }
-        else {
-            return "#FFCE00"
-        }
-    }
 
     Component {
         id: no_star
@@ -81,8 +57,10 @@ Item {
         width: rating_stars.width + vpx(10)
         height: rating_stars.height + vpx(5)
         anchors {
-            top: rating_stars.top; topMargin: -vpx(2)
-            left: rating_stars.left; leftMargin: -vpx(3)
+            top: rating_stars.top
+            topMargin: -vpx(2)
+            left: rating_stars.left
+            leftMargin: -vpx(3)
         }
         color: getBackgroundColor(rating)
         antialiasing: true
@@ -101,9 +79,10 @@ Item {
     Text {
         id: txt_rating
         anchors {
-            top: rect_stars.top; topMargin: -vpx(1)
-            left: rect_stars.right; leftMargin: vpx(3)
-        
+            top: rect_stars.top
+            topMargin: -vpx(1)
+            left: rect_stars.right
+            leftMargin: vpx(3)
         }
         text: rating
         font {
@@ -123,6 +102,26 @@ Item {
                 sourceComponent: modelData.source
                 visible: status == Loader.Ready
             }
+        }
+    }
+
+    function getStars(index, rate) {
+        if (rate <= index) {
+            return no_star;
+        } else if (rate <= index + 0.5) {
+            return half_star;
+        } else {
+            return star;
+        }
+    }
+
+    function getBackgroundColor(rate) {
+        if (rate < 2.5) {
+            return "#B5714B";
+        } else if (rate < 4) {
+            return "#F4F4F4";
+        } else {
+            return "#FFCE00";
         }
     }
 

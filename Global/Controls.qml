@@ -2,7 +2,6 @@ import QtQuick 2.8
 import QtGraphicalEffects 1.12
 
 Item {
-
     property string message: parent.message
     property string text_color: parent.text_color
     property string front_color: parent.front_color
@@ -16,8 +15,10 @@ Item {
         width: row_button.width + vpx(20)
         height: row_button.height + vpx(10)
         anchors {
-            top: row_button.top; topMargin: -vpx(5)
-            right: row_button.right; rightMargin: -vpx(12)
+            top: row_button.top
+            topMargin: -vpx(5)
+            right: row_button.right
+            rightMargin: -vpx(12)
         }
         color: back_color
         antialiasing: true
@@ -57,7 +58,7 @@ Item {
 
         Image {
             height: vpx(16)
-            source: "../assets/controls/button_"+input_button+".svg"
+            source: "../assets/controls/button_" + input_button + ".svg"
             fillMode: Image.PreserveAspectFit
         }
     }

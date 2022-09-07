@@ -15,24 +15,6 @@ Item {
             fillMode: Image.PreserveAspectCrop
         }
 
-        // Desaturate {
-        //     anchors.fill: img_game_screenshot
-        //     source: img_game_screenshot
-        //     desaturation: doubleFocus ? 0 : 1
-        //     Behavior on desaturation {
-        //         NumberAnimation { duration: 200; }
-        //     }
-        // }
-
-        // Rectangle {
-        //     anchors.fill: parent
-        //     color: "#80000000"
-        //     opacity: doubleFocus
-        //     Behavior on opacity {
-        //         NumberAnimation { duration: 200; }
-        //     }
-        // }
-
         // Favourite tag
         Item {
             id: favetag
@@ -215,27 +197,6 @@ Item {
             }
             visible: doubleFocus
         }
-
-        // original favorites marker (border)
-        //Rectangle {
-        //    anchors.fill: parent
-        //    color: "transparent"
-        //    border {
-        //        width: vpx(5)
-        //        color: "#ED3496"
-        //    }
-        //    visible: model.favorite && root.state === "games"
-        //}
-
-        // Image {
-        //     width: parent.width * 0.6
-        //     sourceSize.width: width
-        //     anchors.centerIn: parent
-        //     source: "../assets/controls/button_A_reverse"
-        //     fillMode: Image.PreserveAspectFit
-        //     visible: doubleFocus
-        // }
-        
     }
 
 }

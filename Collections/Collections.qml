@@ -35,7 +35,8 @@ FocusScope {
         height: parent.height
         antialiasing: true
         anchors {
-            left: parent.left; leftMargin: parent.width * 0.23
+            left: parent.left
+            leftMargin: parent.width * 0.23
         }
         color: touch_color
         Behavior on color {
@@ -51,14 +52,15 @@ FocusScope {
                 0,      0,                  0,      1
             )
         }
-
     }
 
     Text {
         id: txt_collectionType
         anchors {
-            top: parent.top; topMargin: vpx(85)
-            right: parent.right; rightMargin: vpx(25)
+            top: parent.top
+            topMargin: vpx(85)
+            right: parent.right
+            rightMargin: vpx(25)
         }
 
         text: collectionType + " Collections"
@@ -87,18 +89,17 @@ FocusScope {
         width: parent.width
         height: parent.height * 0.58
         anchors {
-            bottom: parent.bottom; bottomMargin: vpx(120)
+            bottom: parent.bottom
+            bottomMargin: vpx(120)
         }
 
         PathView {
             id: pv_collections
 
-            readonly property int pathLength: ( pathItemCount + 1 ) * baseItemWidth
+            readonly property int pathLength: (pathItemCount + 1) * baseItemWidth
 
             anchors.fill: parent
-
             focus: collections.focus
-
             model: allCollections
             currentIndex: currentCollectionIndex
 
@@ -149,14 +150,14 @@ FocusScope {
             Keys.onPressed: {
                 if (api.keys.isAccept(event) && !event.isAutoRepeat) {
                     event.accepted = true;
-                    currentMenuIndex = 2
-                    return
+                    currentMenuIndex = 2;
+                    return;
                 }
 
                 if (api.keys.isCancel(event) && !event.isAutoRepeat) {
                     event.accepted = true;
-                    currentMenuIndex = 0
-                    return
+                    currentMenuIndex = 0;
+                    return;
                 }
 
                 if (event.key == Qt.Key_Left) {
@@ -173,7 +174,7 @@ FocusScope {
 
                     games.currentGameIndex = 0;
                     saveCurrentState();
-                    return
+                    return;
                 }
 
                 if (event.key == Qt.Key_Right) {
@@ -190,12 +191,10 @@ FocusScope {
 
                     games.currentGameIndex = 0;
                     saveCurrentState();
-                    return
+                    return;
                 }
             }
-
         }
-
     }
 
     PathView {
@@ -210,13 +209,11 @@ FocusScope {
 
         clip: true
         currentIndex: currentCollectionIndex
-        // model: api.collections
         model: allCollections
         delegate: CollectionsDetails {}
 
         pathItemCount: 3
         path: Path {
-
             // Horizontal Left to Right
             startX: -pv_collections_logo.width
             startY: pv_collections_logo.height /2
@@ -225,7 +222,6 @@ FocusScope {
                 x: pv_collections_logo.path.startX + pv_collections_logo.width *3
                 y: pv_collections_logo.path.startY
             }
-
         }
 
         interactive: false
@@ -235,15 +231,16 @@ FocusScope {
 
         preferredHighlightBegin: 0.5
         preferredHighlightEnd: 0.5
-
     }
 
     Text {
         anchors {
-            right: parent.right; rightMargin: vpx(35)
-            top: parent.top; topMargin: vpx(160)
+            right: parent.right
+            rightMargin: vpx(35)
+            top: parent.top
+            topMargin: vpx(160)
         }
-        text: (currentCollectionIndex+1)+"/"+pv_collections.count
+        text: (currentCollectionIndex + 1) + "/" + pv_collections.count
         font {
             family: robotoSlabThin.name
             pixelSize: vpx(16)
@@ -253,8 +250,10 @@ FocusScope {
     Controls {
         id: button_B
         anchors {
-            bottom: parent.bottom; bottomMargin: vpx(15)
-            left: parent.left; leftMargin: vpx(40)
+            bottom: parent.bottom
+            bottomMargin: vpx(15)
+            left: parent.left
+            leftMargin: vpx(40)
         }
 
         message: "GO <b>BACK</b>"
@@ -268,8 +267,10 @@ FocusScope {
     Controls {
         id: button_Y
         anchors {
-            bottom: parent.bottom; bottomMargin: vpx(15)
-            right: parent.right; rightMargin: vpx(150)
+            bottom: parent.bottom
+            bottomMargin: vpx(15)
+            right: parent.right
+            rightMargin: vpx(150)
         }
 
         message: "SWITCH <b>COLLECTION CATEGORY</b>"
@@ -283,11 +284,13 @@ FocusScope {
     Controls {
         id: button_A
         anchors {
-            bottom: parent.bottom; bottomMargin: vpx(15)
-            left: skew_color.right; leftMargin: -vpx(110);
+            bottom: parent.bottom
+            bottomMargin: vpx(15)
+            left: skew_color.right
+            leftMargin: -vpx(110);
         }
 
-        message: "<b>"+currentCollection.name+"</b> GAMES"
+        message: "<b>" + currentCollection.name + "</b> GAMES"
         text_color: "white"
         front_color: "#00991E"
         back_color: "#00991E"

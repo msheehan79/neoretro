@@ -62,9 +62,7 @@ Item {
                     NumberAnimation { duration: 250; }
                 }
             }
-
         }
-
     }
 
     Loader {
@@ -72,7 +70,7 @@ Item {
         anchors.fill: parent
         sourceComponent: cpnt_collection_bg
         asynchronous: true
-        active: ( root.state === "collections" )
+        active: (root.state === "collections")
     }
 
 }

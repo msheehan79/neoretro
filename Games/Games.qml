@@ -16,7 +16,6 @@ FocusScope {
     readonly property var customSortCategories: ['Custom', 'Series']
     readonly property var customSystemLogoCategories: ['Custom', 'Series']
     readonly property bool customCollection: customSystemLogoCategories.includes(collectionType)
-
     property string shortname: clearShortname(currentCollection.shortName)
 
     state: "all"
@@ -71,7 +70,8 @@ FocusScope {
         height: parent.height
         antialiasing: true
         anchors {
-            left: parent.left; leftMargin: parent.width * 0.77
+            left: parent.left
+            leftMargin: parent.width * 0.77
         }
         color: touch_color
         Behavior on color {
@@ -114,7 +114,8 @@ FocusScope {
                     Text {
                         id: txt_releaseYear
                         anchors {
-                            top: parent.top; topMargin: -vpx(45)
+                            top: parent.top
+                            topMargin: -vpx(45)
                         }
 
                         text: currentGame.releaseYear || "N/A"
@@ -218,7 +219,6 @@ FocusScope {
                                 color: "black"
                                 visible: customCollection
                             }
-
                         }
 
                         Row {
@@ -235,7 +235,7 @@ FocusScope {
 
                                 Text {
                                     id: txt_players
-                                    property var convertPlayer: currentGame.players > 1 ? "1-"+currentGame.players+" PLAYERS" : "1 PLAYER"
+                                    property var convertPlayer: currentGame.players > 1 ? "1-" + currentGame.players + " PLAYERS" : "1 PLAYER"
                                     anchors.centerIn: parent
                                     text: convertPlayer
                                     font {
@@ -342,7 +342,6 @@ FocusScope {
                         Item {
                             width: parent.width
                             height: vpx(69)
-                            // anchors.bottom: parent.bottom
 
                             PegasusUtils.AutoScroll {
                                 anchors.fill: parent
@@ -362,11 +361,8 @@ FocusScope {
                                 }
                             }
                         }
-
-
                     }
                 }
-
             }
 
             Loader {
@@ -451,12 +447,9 @@ FocusScope {
                         active: games.focus && currentGame !== null
                         visible: status === Loader.Ready
                     }
-
                 }
             }
-
         }
-
         visible: currentGame !== null
     }
 
@@ -539,36 +532,36 @@ FocusScope {
 
             Keys.onPressed: {
                 if (event.isAutoRepeat) {
-                    return
+                    return;
                 }
 
                 if (api.keys.isAccept(event)) {
                     event.accepted = true;
                     if (currentGame !== null) {
-                        saveCurrentState(currentGameIndex, sortIndex)
-                        currentGame.launch()
+                        saveCurrentState(currentGameIndex, sortIndex);
+                        currentGame.launch();
                     }
-                    return
+                    return;
                 }
 
                 if (api.keys.isFilters(event)) {
                     event.accepted = true;
                     sortIndex = (sortIndex + 1) % sortFields.length;
-                    return
+                    return;
                 }
 
                 if (api.keys.isCancel(event)) {
                     event.accepted = true;
-                    currentMenuIndex = 1
-                    return
+                    currentMenuIndex = 1;
+                    return;
                 }
 
                 if (api.keys.isDetails(event)) {
                     event.accepted = true;
                     if (currentGame !== null) {
-                        currentGame.favorite = !currentGame.favorite
+                        currentGame.favorite = !currentGame.favorite;
                     }
-                    return
+                    return;
                 }
 
                 if (api.keys.isPageDown(event)) {
@@ -578,7 +571,7 @@ FocusScope {
                     } else {
                         currentGameIndex += 10;
                     }
-                    return
+                    return;
                 }
 
                 if (api.keys.isPageUp(event)) {
@@ -588,10 +581,9 @@ FocusScope {
                     } else {
                         currentGameIndex -= 10;
                     }
-                    return
+                    return;
                 }
             }
-
         }
 
         Component {
@@ -604,7 +596,8 @@ FocusScope {
                     property int heightBar: parent.height - vpx(50)
                     anchors {
                         horizontalCenter: parent.horizontalCenter
-                        top: parent.top; topMargin: vpx(8)
+                        top: parent.top
+                        topMargin: vpx(8)
                     }
                     width: vpx(2)
                     height: heightBar * ( (currentGameIndex + 1) / gv_games.count )
@@ -615,14 +608,14 @@ FocusScope {
                     id: helper_count
                     anchors {
                         horizontalCenter: parent.horizontalCenter
-                        bottom: parent.bottom; bottomMargin: vpx(6)
+                        bottom: parent.bottom
+                        bottomMargin: vpx(6)
                     }
-                    text: (currentGameIndex + 1)+"/"+gv_games.count
+                    text: (currentGameIndex + 1) + "/" + gv_games.count
                     font {
                         family: robotoSlabLight.name
                         pixelSize: vpx(14)
                     }
-
                 }
             }
         }
@@ -632,21 +625,23 @@ FocusScope {
             width: vpx(50)
             height: gv_games.height
             anchors {
-                right: gv_games.left; rightMargin: vpx(25)
-                top: gv_games.top;
+                right: gv_games.left
+                rightMargin: vpx(25)
+                top: gv_games.top
             }
             asynchronous: true
             sourceComponent: cpnt_helper_nav
             active: games.focus && currentGame !== null
             visible: status === Loader.Ready
         }
-
     }
 
     Row {
         anchors {
-            bottom: parent.bottom; bottomMargin: vpx(15)
-            left: parent.left; leftMargin: parent.width * 0.15
+            bottom: parent.bottom
+            bottomMargin: vpx(15)
+            left: parent.left
+            leftMargin: parent.width * 0.15
         }
         spacing: vpx(150)
 
@@ -693,7 +688,7 @@ FocusScope {
         } else if (collection.name == "Favorites") {
             return api.allGames.get(allFavorites.mapToSource(idx));
         } else {
-            return currentCollection.games.get(filteredGames.mapToSource(idx))
+            return currentCollection.games.get(filteredGames.mapToSource(idx));
         }
     }
 

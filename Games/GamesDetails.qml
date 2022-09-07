@@ -3,7 +3,6 @@ import QtGraphicalEffects 1.12
 import "qrc:/qmlutils" as PegasusUtils
 import "../Global"
 
-
 Item {
     property var currentGameGenre: model.genre.split(" / ")
 
@@ -21,7 +20,8 @@ Item {
             Text {
                 id: txt_releaseYear
                 anchors {
-                    top: parent.top; topMargin: -vpx(45)
+                    top: parent.top
+                    topMargin: -vpx(45)
                 }
 
                 text: model.releaseYear || "N/A"
@@ -50,7 +50,8 @@ Item {
             RatingStars {
                 readonly property double rating: (model.rating * 5).toFixed(1)
                 anchors {
-                    top: parent.top; topMargin: parent.height * 0.1
+                    top: parent.top
+                    topMargin: parent.height * 0.1
                     right: parent.right
                 }
             }
@@ -60,7 +61,8 @@ Item {
                 spacing: vpx(10)
                 width: parent.width
                 anchors {
-                    bottom: parent.bottom; bottomMargin: vpx(20)
+                    bottom: parent.bottom
+                    bottomMargin: vpx(20)
                 }
 
                 Text {
@@ -115,7 +117,7 @@ Item {
 
                         Text {
                             id: txt_players
-                            property var convertPlayer: model.players > 1 ? "1-"+model.players+" PLAYERS" : "1 PLAYER"
+                            property var convertPlayer: model.players > 1 ? "1-" + model.players + " PLAYERS" : "1 PLAYER"
                             anchors.centerIn: parent
                             text: convertPlayer
                             font {
@@ -157,7 +159,6 @@ Item {
                 Item {
                     width: parent.width
                     height: vpx(68)
-                    // anchors.bottom: parent.bottom
 
                     PegasusUtils.AutoScroll {
                         anchors.fill: parent
@@ -177,7 +178,6 @@ Item {
                         }
                     }
                 }
-
             }
         }
 
@@ -214,8 +214,6 @@ Item {
                     id: img_game_boxart
                     source: model.assets.boxFront || model.assets.logo
                     anchors.fill: parent
-                    // sourceSize.width: width
-                    // sourceSize.height: height
                     fillMode: Image.PreserveAspectFit
                     horizontalAlignment: Image.AlignHCenter
                     verticalAlignment: Image.AlignVCenter
@@ -242,7 +240,6 @@ Item {
                 active: games.focus
                 visible: status === Loader.Ready
             }
-
         }
     }
 

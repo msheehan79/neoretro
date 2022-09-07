@@ -122,7 +122,7 @@ Item {
         anchors.fill: parent
         sourceComponent: cpnt_collection_details
         asynchronous: true
-        active: ( root.state === "collections" )
+        active: (root.state === "collections")
     }
 
 }
