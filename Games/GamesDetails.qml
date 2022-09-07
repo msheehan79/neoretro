@@ -9,7 +9,7 @@ Item {
 
     width: ListView.view.width
     height: ListView.view.height
-    
+
     // ALL GAMES INFORMATION
     Component {
         id: cpnt_gameList_details
@@ -48,7 +48,7 @@ Item {
 
             // RATING
             RatingStars {
-                readonly property var rating: (model.rating *5).toFixed(1)
+                readonly property double rating: (model.rating * 5).toFixed(1)
                 anchors {
                     top: parent.top; topMargin: parent.height * 0.1
                     right: parent.right

@@ -17,7 +17,7 @@ FocusScope {
     readonly property var customSystemLogoCategories: ['Custom', 'Series']
     readonly property bool customCollection: customSystemLogoCategories.includes(collectionType)
 
-    property var shortname: clearShortname(currentCollection.shortName)
+    property string shortname: clearShortname(currentCollection.shortName)
 
     state: "all"
 
@@ -66,7 +66,7 @@ FocusScope {
 
     Rectangle {
         id: skew_color
-        readonly property var touch_color: (dataConsoles[shortname] !== undefined) ? dataConsoles[shortname].color : dataConsoles["default"].color
+        readonly property string touch_color: (dataConsoles[shortname] !== undefined) ? dataConsoles[shortname].color : dataConsoles["default"].color
         width: parent.width * 0.42
         height: parent.height
         antialiasing: true
@@ -142,7 +142,7 @@ FocusScope {
                     // RATING
                     RatingStars {
                         id: ratingSection
-                        readonly property var rating: (currentGame.rating *5).toFixed(1)
+                        readonly property double rating: (currentGame.rating * 5).toFixed(1)
                         anchors {
                             top: parent.top; 
                             topMargin: parent.height * 0.1

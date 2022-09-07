@@ -2,11 +2,11 @@ import QtQuick 2.8
 import QtGraphicalEffects 1.12
 
 Item {
-    property var isCurrentItem: PathView.isCurrentItem
-    property var shortname: clearShortname(modelData.shortName)
-    property var manufacturer: (dataConsoles[shortname] !== undefined) ? dataConsoles[shortname].manufacturer : null
-    property var release: (dataConsoles[shortname] !== undefined) ? dataConsoles[shortname].release : dataConsoles["default"].release
-    property var manufacturerColor: (manufacturer !== null) ? dataManufacturers[manufacturer].color : "black"
+    property bool isCurrentItem: PathView.isCurrentItem
+    property string shortname: clearShortname(modelData.shortName)
+    property string manufacturer: (dataConsoles[shortname] !== undefined) ? dataConsoles[shortname].manufacturer : null
+    property string release: (dataConsoles[shortname] !== undefined) ? dataConsoles[shortname].release : dataConsoles["default"].release
+    property string manufacturerColor: (manufacturer !== null) ? dataManufacturers[manufacturer].color : "black"
 
     width: PathView.view.width
     height: PathView.view.height
@@ -93,14 +93,12 @@ Item {
                             anchors.fill: parent
                             sourceSize.width: width
                             sourceSize.height: height
-                            source: (manufacturer !== null) ? "../assets/manufacturers/logo/" + manufacturer : ""
+                            source: (manufacturer !== "") ? "../assets/manufacturers/logo/" + manufacturer : ""
                             fillMode: Image.PreserveAspectFit
                         }
                     }
-
-                    visible: (img_manufacturer.status === Image.Ready || manufacturer !== null)
+                    visible: (img_manufacturer.status === Image.Ready || manufacturer !== "")
                 }
-
 
                 Text {
                     id: txt_collection_release
@@ -117,9 +115,7 @@ Item {
                     color: (manufacturerColor !== '#ffffff') ? manufacturerColor : "black"
                 }
             }
-
         }
-
     }
 
     Loader {

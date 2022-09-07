@@ -1,7 +1,7 @@
 import QtQuick 2.8
 
 Item {
-    property var isCurrentItem: ListView.isCurrentItem
+    property bool isCurrentItem: ListView.isCurrentItem
 
     width: txt_menu_metrics.width
     height: txt_menu_metrics.height

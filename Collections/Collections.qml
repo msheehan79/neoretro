@@ -6,8 +6,8 @@ FocusScope {
     focus: collections.focus
 
     readonly property int baseItemWidth: root.width /8
-    property var shortname: clearShortname(currentCollection.shortName)
-    readonly property var touch_color: (dataConsoles[shortname] !== undefined) ? dataConsoles[shortname].color : dataConsoles["default"].color
+    property string shortname: clearShortname(currentCollection.shortName)
+    readonly property string touch_color: (dataConsoles[shortname] !== undefined) ? dataConsoles[shortname].color : dataConsoles["default"].color
 
     Behavior on focus {
         ParallelAnimation {

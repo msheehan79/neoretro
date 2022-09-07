@@ -23,7 +23,7 @@ FocusScope {
     // [2] = GAMES
     property int currentMenuIndex: api.memory.get("currentMenuIndex") || 0
 
-    property var collectionType: api.memory.get("currentCollectionType") || "System"
+    property string collectionType: api.memory.get("currentCollectionType") || "System"
     property var collectionTypes: getAllCollectionTypes()
 
     property var allCollections: {
@@ -82,13 +82,13 @@ FocusScope {
     property int currentCollectionIndex: api.memory.get("currentCollectionIndex-" + collectionType) || 0
     property var currentCollection: allCollections[currentCollectionIndex]
 
-    property variant dataMenu: [
+    property var dataMenu: [
         { name: "home" },
         { name: "collections" },
         { name: "games" }
     ]
 
-    property variant dataManufacturers: {
+    property var dataManufacturers: {
         "sega":      { color: "#17569b" },
         "sony":      { color: "#1D1D1D" },
         "snk":       { color: "#359CD2" },
@@ -110,7 +110,7 @@ FocusScope {
         return dataLaunchbox[shortname] ? dataLaunchbox[shortname] : shortname
     }
 
-    property variant dataLaunchbox: {
+    property var dataLaunchbox: {
         "amstrad cpc" :                             "amstradcpc",
         "apple ii" :                                "apple2",
         "atari 2600" :                              "atari2600",
@@ -167,7 +167,7 @@ FocusScope {
     }
 
     // Additional data to display manufacturers and release dates
-    property variant dataConsoles: {
+    property var dataConsoles: {
         "default":            { manufacturer: null,                release: null,   color: "#000000", altColor: "#252525", fullName: "Default"                       },
         "amstradcpc":         { manufacturer: "amstrad",           release: "1984", color: "#000000", altColor: "#252525", fullName: "Amstrad CPC"                   },
         "apple2":             { manufacturer: "apple",             release: "1977", color: "#000000", altColor: "#252525", fullName: "Apple II"                      },

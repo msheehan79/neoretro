@@ -4,9 +4,9 @@ import QtGraphicalEffects 1.12
 Item {
     id: item_collection
 
-    property var isCurrentItem: PathView.isCurrentItem
-    property var shortname: clearShortname(modelData.shortName)
-    property var collectionAltColor: (dataConsoles[shortname] !== undefined) ? dataConsoles[shortname].altColor : dataConsoles["default"].altColor
+    property bool isCurrentItem: PathView.isCurrentItem
+    property string shortname: clearShortname(modelData.shortName)
+    property string collectionAltColor: (dataConsoles[shortname] !== undefined) ? dataConsoles[shortname].altColor : dataConsoles["default"].altColor
 
     width: PathView.currentWidth
     height: PathView.currentHeight
